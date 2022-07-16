@@ -16,17 +16,20 @@ class ReversiGame:
         self.pl1_name = game_data_dictionary['pl1_name']
         self.pl2_name = game_data_dictionary['pl2_name']
         self.board_size = game_data_dictionary['board_size']
+        self.create_board()
 
-        #盤面を作成する
-        """外側がカラム、内側が行
-        board[1][2]は、一番左の上から2番目。ExcelのA2
-        盤面の外側にWALLが存在する"""
+    def create_board(self):
+        """リバーシの盤面を作成する
+        外側が行、内側がカラム
+        board[1][2]は、一番上の左から2番目のマスを意味する。
+        盤面の外側にWALLが存在する
+        そのため、board[n][m]は、盤面のn番目行m番目列を指し示す。
+        """
         self.board = [ [] for i in range(self.board_size+2)] #columns
         #まずはすべて空にする
         for column in self.board:
             for i in range(self.board_size+2):
                 column.append(self.NONE)
-        """
         #次に盤面の外側をWALLで埋める
         for row in self.board[0]: #左端の壁
             for p in range(row):
@@ -37,9 +40,9 @@ class ReversiGame:
 
         #上下の壁
         for i in range(len(self.board)):
-            self.board[i][0] = self.WALL
-            self.board[i][len(self.board)-1] = self.WALL
-        """
+            self.board[0][i] = self.WALL
+            self.board[len(self.board)-1][i] = self.WALL
+
 
 if __name__ == '__main__': #テストを以下に記述
     data = {
